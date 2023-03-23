@@ -1,0 +1,18 @@
+version: '3'
+name: musica_nest
+services:
+  db:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mahatoky
+      MONGO_INITDB_ROOT_PASSWORD: lsatvph
+      MONGO_REPLICA_HOST: 27017
+      MONGO_REPLICA_PORT: 27017
+volumes:
+  mongodata: {}
