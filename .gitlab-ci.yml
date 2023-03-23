@@ -1,0 +1,52 @@
+stages:
+  - build
+  - test
+  - quality
+  - deploy
+
+cache:
+  key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+  paths:
+    - node_modules/
+  policy: pull-push
+  unprotect: false
+  untracked: false
+  when: on_success
+
+image: node:18.11.0
+
+before_script:
+  - npm install
+
+build:
+  stage: build
+  script:
+    - npm run build
+
+test:
+  stage: test
+  allow_failure: true
+  script:
+    - npm run test
+  dependencies:
+    - build
+
+quality:
+  stage: quality
+  script: npm run lint > quality_nest.json
+  artifacts:
+    paths: 
+    - quality_nest.json
+  dependencies:
+    - build
+    - test
+
+deploy:
+  stage: deploy
+  only:
+    variables:
+      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  environment: production
+  script: echo "Define your deployment script!"
+  
+  
