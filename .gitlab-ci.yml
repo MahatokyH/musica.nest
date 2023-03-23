@@ -35,8 +35,10 @@ quality:
   stage: quality
   script: npm run lint > quality_nest.json
   artifacts:
-    paths: 
-    - quality_nest.json
+    when: always
+    reports:
+        codequality:
+            - quality_nest.json
   dependencies:
     - build
     - test
