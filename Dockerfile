@@ -3,11 +3,10 @@ WORKDIR /home/src
 COPY . .
 RUN npm install
 RUN npm run build
-RUN ls
-RUN PWD
 WORKDIR /home/app
-COPY /home/src/dist .
-COPY /home/src/*.json .
+RUN ["mv","/home/src/dist","."]
+RUN ["mv","/home/src/node_modules","."]
+RUN ["rm","/home/src","-R"]
 RUN npm install
 EXPOSE 3000
 CMD [ "node" ,"dist/main.js" ]
