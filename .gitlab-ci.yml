@@ -15,16 +15,19 @@ cache:
 
 image: node:18.11.0
 
-before_script:
-  - npm install
+
 
 build:
   stage: build
+  before_script:
+  - npm install
   script:
     - npm run build
 
 test:
   stage: test
+  before_script:
+  - npm install
   allow_failure: true
   script:
     - npm run test
@@ -33,6 +36,8 @@ test:
 
 quality:
   stage: quality
+  before_script:
+  - npm install
   script: npm run lint > quality_nest.json
   artifacts:
     when: always
