@@ -48,21 +48,21 @@ quality:
     - build
     - test
 
-deploy:
-  stage: deploy
-  image: docker:20.10.23
-  services:
-    - docker:dind
-  only:
-    variables:
-      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  environment: production 
-  script:
-    - docker login -u 'mahatokyh' -p '#lsatvph25.' docker.io
-    - docker build -t mahatokyh/musica_nest:master .
-    - docker push mahatokyh/musica_nest:master
-  dependencies:
-      - build
-      - test
+# deploy:
+#   stage: deploy
+#   image: docker:20.10.23
+#   services:
+#     - docker:dind
+#   only:
+#     variables:
+#       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#   environment: production 
+#   script:
+#     - docker login -u 'mahatokyh' -p '#lsatvph25.' docker.io
+#     - docker build -t mahatokyh/musica_nest:master .
+#     - docker push mahatokyh/musica_nest:master
+#   dependencies:
+#       - build
+#       - test
   
   
