@@ -1,53 +1,51 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { CreateAlbumDto } from 'src/DTO/album/create-album.dto';
-import { UpdateAlbumDto } from 'src/DTO/album/update-album.dto';
-import { IAlbum } from 'src/interface/album.interface';
+/* eslint-disable prettier/prettier */
+import { Injectable } from '@nestjs/common';
+import { AlbumDto } from 'src/DTO/album/album.dto';
+import { AlbumRepository } from 'src/Repositories/album.repository';
+import { v4 as uuidv4 } from 'uuid';
+import { plainToClass } from 'class-transformer';
+import { Album } from 'src/Schemas/album.schema';
 
 @Injectable()
 export class AlbumService {
+  constructor(private readonly albumRepository: AlbumRepository) {}
 
-    constructor(
-        @InjectModel('Album') 
-        private albumModel:Model<IAlbum>
-        ) { }
+  async createAlbum(createAlbumDto: AlbumDto): Promise<Album> {
+    const album = this.albumRepository.create({
+      albumId: uuidv4(),
+      titre: createAlbumDto.titre,
+      dateDeSortie: createAlbumDto.dateDeSortie,
+      artistes: createAlbumDto.artistes,
+      descritption: createAlbumDto.descritption,
+    });
+    // const dto = plainToClass(AlbumDto, album);
+    return album;
+  }
 
-        async createAlbum(createAlbumDto: CreateAlbumDto): Promise<IAlbum> {
-            const newStudent = await new this.albumModel(createAlbumDto);
-            return newStudent.save();
-         }
+  async updateAlbum(albumId: string, updateAlbumDto: AlbumDto): Promise<Album> {
+    const album = this.albumRepository.findOneAndUpdate(
+      { albumId },
+      updateAlbumDto,
+    );
+    // const dto = plainToClass(AlbumDto, album);
+    return album;
+  }
 
-         async updateAlbum(albumId: string, updateAlbumDto: UpdateAlbumDto): Promise<IAlbum> {
-            console.log(albumId)
-            const existingStudent = await  this.albumModel.findByIdAndUpdate(albumId, updateAlbumDto, { new: true });
-           if (!existingStudent) {
-             throw new NotFoundException(`Album #${albumId} not found`);
-           }
-           return existingStudent;
-        }
-        
-        async getAllAlbums(): Promise<IAlbum[]> {
-            const albumData = await this.albumModel.find();
-            if (!albumData || albumData.length == 0) {
-                throw new NotFoundException('Albums data not found!');
-            }
-            return albumData;
-        }
-    
-        async getAlbum(albumId: string): Promise<IAlbum> {
-            const existingAlbum = await  this.albumModel.findById(albumId).exec();
-            if (!existingAlbum) {
-             throw new NotFoundException(`Album #${albumId} not found`);
-            }
-            return existingAlbum;
-         }
-    
-         async deleteAlbum(albumId: string): Promise<IAlbum> {
-            const deletedAlbum = await this.albumModel.findByIdAndDelete(albumId);
-           if (!deletedAlbum) {
-             throw new NotFoundException(`Album #${albumId} not found`);
-           }
-           return deletedAlbum;
-        }
+  async getAllAlbums(): Promise<Album[]> {
+    const albums = await this.albumRepository.find({});
+    // const dto = plainToClass(AlbumDto, albums);
+    return albums;
+  }
+
+  async getAlbum(albumId: string): Promise<Album> {
+    const album = this.albumRepository.findOne({ albumId });
+    // const dto = plainToClass(AlbumDto, album);
+    return album;
+  }
+
+  async deleteAlbum(albumId: string): Promise<Album> {
+    const album = this.albumRepository.findOneAndDelete({ albumId });
+    // const dto = plainToClass(AlbumDto, album);
+    return album;
+  }
 }

@@ -1,7 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { Test, TestingModule } from '@nestjs/testing';
 import { AlbumController } from './album.controller';
 import { Album } from '../../Schemas/album.schema';
-import { CreateAlbumDto } from '../../DTO/album/create-album.dto';
+import { AlbumDto } from '../../DTO/album/album.dto';
 
 describe('AlbumController', () => {
   let controller: AlbumController;
@@ -23,19 +24,19 @@ describe('create a album', () => {
   let controller: AlbumController;
   it('should return a album add', async () => {
     const album = new Album();
-    album.Artiste = "Aurora";
-    album.Lecteur = "Youtube";
+    album.artistes = ['Aurora'];
+    album.descritption = 'Youtube';
     album.dateDeSortie = new Date(Date.now());
     const result = new Promise<Album>((resolve, rejects) => {
       resolve(album);
     });
-    const dto = new CreateAlbumDto();
-    dto.Artiste = "Aurora";
-    dto.Lecteur = "Youtube";
+    const dto = new AlbumDto();
+    dto.artistes = ['Aurora'];
+    dto.descritption = 'Youtube';
     dto.dateDeSortie = new Date(Date.now());
 
-    expect((await controller.createAlbum("",dto)).Artiste).toStrictEqual(
-      (await result).Artiste,
+    expect((await controller.createAlbum(dto)).artistes).toStrictEqual(
+      (await result).artistes,
     );
   });
 });

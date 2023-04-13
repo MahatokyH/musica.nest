@@ -17,6 +17,9 @@ export class Music {
 
   @Prop()
   dateOut: Date;
+
+  @Prop()
+  albumId: string;
 }
 
 export const MusicSchema = SchemaFactory.createForClass(Music);

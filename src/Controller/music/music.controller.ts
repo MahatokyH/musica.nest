@@ -9,8 +9,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { MusicDto } from '../../DTO/music.dto';
-import { Music } from '../../Schemas/music.schema';
 import { MusicService } from '../../Services/music.service';
+import { Music } from 'src/Schemas/music.schema';
 
 @Controller('music')
 export class MusicController {

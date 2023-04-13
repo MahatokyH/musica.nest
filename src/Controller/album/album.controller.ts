@@ -1,84 +1,57 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
-import { CreateAlbumDto } from '../../DTO/album/create-album.dto';
-import { UpdateAlbumDto } from '../../DTO/album/update-album.dto';
+/* eslint-disable prettier/prettier */
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Res,
+} from '@nestjs/common';
+import { AlbumDto } from '../../DTO/album/album.dto';
 import { AlbumService } from '../../Services/album/album.service';
+import { Album } from 'src/Schemas/album.schema';
 
 @Controller('album')
 export class AlbumController {
+  constructor(private readonly albumService: AlbumService) {}
 
-    constructor(private readonly albumService: AlbumService) { }
+  @Post()
+  @HttpCode(201)
+  async createAlbum(@Body() createAlbumDto: AlbumDto): Promise<Album> {
+    return this.albumService.createAlbum(createAlbumDto);
+  }
 
-    @Post('/createAlbum')
-   async createAlbum(@Res() response, @Body() createAlbumDto: CreateAlbumDto) {
-    try{
-            const newAlbum = await this.albumService.createAlbum(createAlbumDto);
-            return response.status(HttpStatus.CREATED).json({
-            message: 'Album has been created successfully',
-            newAlbum,});
-        } 
-    catch(err){
-                return response.status(HttpStatus.BAD_REQUEST).json({
-                statusCode: 400,
-                message: 'Error: Album not created!',
-                error: 'Bad Request'
-                });
-            }
-    }
+  @Put(':id')
+  @HttpCode(200)
+  async updateAlbum(
+    @Param('id') AlbumId: string,
+    @Body() updateAlbumDto: AlbumDto,
+  ): Promise<Album> {
+    return this.albumService.updateAlbum(AlbumId, updateAlbumDto);
+  }
 
-    @Put('updateAlbum/:id')
-    async updateAlbum(@Res() response,@Param('id') AlbumId: string, @Body() updateAlbumDto: UpdateAlbumDto) {
-        try {
-            const existingAlbum = await this.albumService.updateAlbum(AlbumId, updateAlbumDto);
-            return response.status(HttpStatus.OK).json({
-            message: 'Album has been successfully updated',
-            existingAlbum,});
-        } 
-        catch (err) {
-            return response.status(err.status).json(err.response);
-        }
-    }
+  @Get()
+  @HttpCode(200)
+  async getAllalbum(): Promise<Album[]> {
+    return this.albumService.getAllAlbums();
+  }
 
-    @Get('getAllAlbum')
-    async getAllalbum(@Res() response) {
-        try {
-            console.log("miditra get")
-        const albumData = await this.albumService.getAllAlbums();
-        return response.status(HttpStatus.OK).json({
-        message: 'All Albums data found successfully',albumData,});
-        } catch (err) {
-        return response.status(err.status).json(err.response);
-        }
-    }
+  @Get(':id')
+  @HttpCode(200)
+  async getAlbum(@Param('id') albumId: string): Promise<Album> {
+    return this.albumService.getAlbum(albumId);
+  }
 
-    @Get('findAlbum/:id')
-    async getAlbum(@Res() response, @Param('id') albumId: string) {
-        try {
-            const existingAlbum = await
-            this.albumService.getAlbum(albumId);
-            return response.status(HttpStatus.OK).json({
-            message: 'Album found successfully',existingAlbum,});
-        } 
-        catch (err) {
-            
-        return response.status(err.status).json(err.response);
-        }
-    }
-
-    @Delete('deleteAlbum/:id')
-    async deleteAlbum(@Res() response, @Param('id') albumId: string)
-    {
-        try {
-            const deletedAlbum = await this.albumService.deleteAlbum(albumId);
-            return response.status(HttpStatus.OK).json({
-            message: 'Album deleted successfully',
-            deletedAlbum,});
-        }
-        catch (err) {
-            return response.status(err.status).json(err.response);
-        }
-    }
-
-
-
-
+  @Delete(':id')
+  @HttpCode(200)
+  async deleteAlbum(
+    @Res() response,
+    @Param('id') albumId: string,
+  ): Promise<Album> {
+    return this.albumService.deleteAlbum(albumId);
+  }
 }
