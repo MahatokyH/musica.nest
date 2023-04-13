@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
-import { CreateAlbumDto } from 'src/DTO/album/create-album.dto';
-import { UpdateAlbumDto } from 'src/DTO/album/update-album.dto';
-import { AlbumService } from 'src/Services/album/album.service';
+import { CreateAlbumDto } from '../../DTO/album/create-album.dto';
+import { UpdateAlbumDto } from '../../DTO/album/update-album.dto';
+import { AlbumService } from '../../Services/album/album.service';
 
 @Controller('album')
 export class AlbumController {
