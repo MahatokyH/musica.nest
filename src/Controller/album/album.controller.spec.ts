@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AlbumController } from './album.controller';
-import { Album } from 'src/Schemas/album.schema';
-import { CreateAlbumDto } from 'src/DTO/album/create-album.dto';
+import { Album } from '../../Schemas/album.schema';
+import { CreateAlbumDto } from '../../DTO/album/create-album.dto';
 
 describe('AlbumController', () => {
   let controller: AlbumController;
