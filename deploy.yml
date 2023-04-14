@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: musica-nest-deploy
+  labels:
+    app: musica-nest-label
+  namespace: developpement
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: musica-nest-label
+  template:
+    metadata:
+      name: musica-nest
+      namespace: developpement
+      labels:
+        app: musica-nest-label
+    spec:
+      containers:
+        - name: musica-nest
+          #image: mahatokyh/musica_nest:test
+          image: mahatokyh/musica_nest:master
+          env : 
+            - name: MONGODB_CONNECTION
+              value: "mongodb://mahatoky:lsatvph@mongo-musica-service:27017"
+            - name: DATABASE_NAME
+              value: "Musica"
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: "0.5"
+            limits:
+              memory: 100Mi
+              cpu: "1"
