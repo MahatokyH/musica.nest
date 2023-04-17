@@ -59,8 +59,8 @@ deploy:
   environment: production 
   script:
     - docker login -u 'mahatokyh' -p '#lsatvph25.' docker.io
-    - docker build -t mahatokyh/musica_nest:master .
-    - docker push mahatokyh/musica_nest:master
+    - docker build -t mahatokyh/musica_nest:master2 .
+    - docker push mahatokyh/musica_nest:master2
   dependencies:
       - build
       - test

@@ -25,7 +25,7 @@ spec:
       containers:
         - name: musica-nest
           #image: mahatokyh/musica_nest:test
-          image: mahatokyh/musica_nest:master
+          image: mahatokyh/musica_nest:master2
           env : 
             - name: MONGODB_CONNECTION
               value: "mongodb://mahatoky:lsatvph@mongo-musica-service:27017"

@@ -15,6 +15,7 @@ if ('DATABASE_NAME' in process.env) databaseName = process.env['DATABASE_NAME'];
   imports: [
     MongooseModule.forRoot(stringConnection, { dbName: databaseName }),
     MusicModule,
+    AlbumModule,
   ],
   controllers: [AppController],
   providers: [AppService],
