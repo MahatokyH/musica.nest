@@ -1,73 +1,111 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# MUSICA :
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Une application en architecture microservice pour une bibliotheque de musiques
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## MUSICA NEST
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- La liste des musiques et des albums
+- Une base de donné MongoDb
 
-## Installation
+## Test :
 
-```bash
-$ npm install
+- Utilisation d'une base de donné en memoire : <b>MongoseMemory</b>
+- Test Unitaire :
+  - Ce fait avec Junit , chaque controlleur à un fichier <b>name.controller.spec.ts</b> qui contient les test
+- Test d'integration :
+  - Ce fait dans le dossier : test
+
+## Deploiement :
+
+- Docker :
+  - Dockerfile
+- Kubernetes :
+  - deploy.yml
+  - service.yml
+
+## URI
+
+Pour creer un album
+
+> album [[POST]]
+
+```
+{
+    "titre":"Liens du 100",
+    "dateDeSortie":"2023-01-01",
+    "singer":[
+        "SDM"
+    ],
+    "descritption": "LE DERNIER ALBUM DE SDM"
+}
 ```
 
-## Running the app
+Pour mettre à jour un album
 
-```bash
-# development
-$ npm run start
+> album/{id} [[PUT]]
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+{
+    "titre":"Liens du 100",
+    "dateDeSortie":"2023-01-01",
+    "artistes":[
+        "SDM"
+    ],
+    "descritption": "LE DERNIER ALBUM DE SDM"
+}
 ```
 
-## Test
+Pour prendre la liste des albums
 
-```bash
-# unit tests
-$ npm run test
+> album [[GET]]
 
-# e2e tests
-$ npm run test:e2e
+Pour un album
 
-# test coverage
-$ npm run test:cov
+> album/{id} [[GET]]
+
+Pour supprimer
+
+> album/{id} [[GET]]
+
+Pour creer une music
+
+> music [[POST]]
+
+```
+{
+    "title":"Paris",
+    "dateOut":"2018-01-01",
+    "singer":[
+        "Nsika"
+    ],
+    "albumId":"f3a33874-b47e-436a-8b6b-49d66ab8c381"
+}
 ```
 
-## Support
+Pour mettre à jour un music
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+> music/{id} [[PUT]]
 
-## Stay in touch
+```
+> {
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+    "title":"Paris",
+    "dateOut":"2018-01-01",
+    "singer":[
+        "Niska"
+    ],
+    "albumId":"f3a33874-b47e-436a-8b6b-49d66ab8c381"
 
-## License
+}
 
-Nest is [MIT licensed](LICENSE).
+```
+
+Pour prendre la liste des albums
+
+> music [[GET]]
+
+Pour un album
+
+> music/{id} [[GET]]
