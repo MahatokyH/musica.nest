@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    node {
-      label 'MusicaNest'
-    }
-
-  }
+  agent any
   stages {
     stage('Build') {
       steps {
